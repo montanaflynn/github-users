@@ -1,1 +1,8 @@
-This is a scraper that runs on [Morph](https://morph.io). To get started [see the documentation](https://morph.io/documentation)
+# GitHub Users Database
+
+## Gathered using [morph.io](http://morph.io) with python and sqlite3.
+
+## Todo:
+
+- Use OAuth
+- Get user meta data 
