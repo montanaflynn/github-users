@@ -45,7 +45,7 @@ def save(data):
 def to_bool(s):
   return 1 if s == True else 0
 
-def start():
+def main():
   db.execute('''
     CREATE TABLE IF NOT EXISTS data( 
       id INTEGER, 
@@ -64,4 +64,5 @@ def start():
     last = str(users[0][0])
     get('https://api.github.com/users?since='+last)
 
-start()
+if __name__ == '__main__'
+    main()
