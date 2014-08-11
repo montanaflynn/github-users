@@ -64,5 +64,5 @@ def main():
     last = str(users[0][0])
     get('https://api.github.com/users?since='+last)
 
-if __name__ == '__main__'
+if __name__ == '__main__':
     main()
