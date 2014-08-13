@@ -39,8 +39,13 @@ def get(url):
       get('https://api.github.com/users?since='+last)
 
 def save(data):
-  db.execute("insert into data values (?,?,?,?,?,?)", (data["id"],data["login"],data["url"],data["html_url"],data["gravatar_id"],data["site_admin"]) )
-  conn.commit()
+  try:
+    db.execute("insert into data values (?,?,?,?,?,?)", (data["id"],data["login"],data["url"],data["html_url"],data["gravatar_id"],data["site_admin"]) )
+    conn.commit()
+  except:
+    save(data)
+    pass
+  
 
 def to_bool(s):
   return 1 if s == True else 0
@@ -53,7 +58,8 @@ def start():
       url TEXT, 
       html_url TEXT, 
       gravatar_id VARCHAR(32), 
-      site_admin INTEGER
+      site_admin INTEGER,
+      UNIQUE(id)
     )'''
   )
   db.execute('SELECT * FROM data ORDER BY id DESC LIMIT 1;')
