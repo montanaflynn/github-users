@@ -26,9 +26,9 @@ def get(url):
         'gravatar_id': user['gravatar_id'],
         'site_admin': to_bool(user["site_admin"])
       }
-      last = str(user['id'])
       save(data)
 
+    last = body[-1]['id']
     print last, remaining, wait
 
     if remaining < 5:
