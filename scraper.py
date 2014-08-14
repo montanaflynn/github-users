@@ -29,7 +29,7 @@ def get(url):
       save(data)
 
     last = body[-1]['id']
-    # print last, remaining, wait
+    print last, remaining, wait
 
     if remaining < 5:
       time.sleep(wait+10)
