@@ -36,7 +36,11 @@ def get(url):
     if remaining < 5:
       time.sleep(wait+10)
     else:
-      get('https://api.github.com/users?since='+last)
+        try:
+          get('https://api.github.com/users?since='+last)
+        except:
+          get('https://api.github.com/users?since='+last)
+          pass
 
 def save(data):
   try:
@@ -45,7 +49,6 @@ def save(data):
   except:
     save(data)
     pass
-  
 
 def to_bool(s):
   return 1 if s == True else 0
