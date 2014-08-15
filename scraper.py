@@ -10,16 +10,16 @@ db = conn.cursor()
 def get(url):
   username = os.environ['MORPH_GH_USERNAME']
   password = os.environ['MORPH_GH_PASSWORD']
-  r = requests.get(url, auth=(username, password), headers={'Connection':'close'})
+  r = requests.get(url, auth=(username, password))
   if(r.ok):
     headers = r.headers
     body = json.loads(r.content)
     remaining = int(headers["x-ratelimit-remaining"])
-    reset = int(headers["x-ratelimit-reset"])
-    now = int(time.time())
-    wait = (reset - now)
+    wait = (int(headers["x-ratelimit-reset"]) - int(time.time()))
+    process(body,remaining,wait)
 
-    for user in body:
+def process(users, remaining, wait):
+    for user in users:
       data = {
         'id': user['id'],
         'login': user['login'],
@@ -28,14 +28,13 @@ def get(url):
       }
       save(data)
 
-    last = str(body[-1]['id'])
-    print last, remaining, wait
+    last = str(users[-1]['id'])
+    print last
 
     if remaining < 5:
       time.sleep(wait+10)
     else:
       get('https://api.github.com/users?since='+last)
-
 
 def save(data):
   try:
@@ -63,6 +62,7 @@ def main():
     get('https://api.github.com/users')
   else: 
     last = str(users[0][0])
+    print last
     get('https://api.github.com/users?since='+last)
 
 if __name__ == '__main__':
