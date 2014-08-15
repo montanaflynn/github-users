@@ -16,9 +16,17 @@ def get(url):
     body = json.loads(r.content)
     remaining = int(headers["x-ratelimit-remaining"])
     wait = (int(headers["x-ratelimit-reset"]) - int(time.time()))
-    process(body,remaining,wait)
+    last = str(users[-1]['id'])
+    print last
 
-def process(users, remaining, wait):
+    if remaining < 5:
+      time.sleep(wait+10)
+    else:
+      get('https://api.github.com/users?since='+last)
+
+    process(body)
+
+def process(users):
     for user in users:
       data = {
         'id': user['id'],
@@ -27,14 +35,6 @@ def process(users, remaining, wait):
         'site_admin': to_bool(user["site_admin"])
       }
       save(data)
-
-    last = str(users[-1]['id'])
-    print last
-
-    if remaining < 5:
-      time.sleep(wait+10)
-    else:
-      get('https://api.github.com/users?since='+last)
 
 def save(data):
   try:
