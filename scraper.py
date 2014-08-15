@@ -38,8 +38,11 @@ def get(url):
 
 
 def save(data):
-  db.execute("insert into data values (?,?,?,?)", (data["id"],data["login"],data["gravatar_id"],data["site_admin"]) )
-  conn.commit()
+  try:
+    db.execute("insert into data values (?,?,?,?)", (data["id"],data["login"],data["gravatar_id"],data["site_admin"]) )
+    conn.commit()
+  except:
+    pass
 
 def to_bool(s):
   return 1 if s == True else 0
