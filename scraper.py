@@ -34,14 +34,8 @@ def get(url):
     if remaining < 5:
       time.sleep(wait+10)
     else:
-        try:
-          get('https://api.github.com/users?since='+last)
-        except:
-          db.execute('SELECT * FROM data ORDER BY id DESC LIMIT 1;')
-          users = db.fetchall()
-          last = str(users[0][0])
-          get('https://api.github.com/users?since='+last)
-          pass
+      get('https://api.github.com/users?since='+last)
+
 
 def save(data):
   try:
