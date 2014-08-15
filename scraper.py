@@ -28,7 +28,7 @@ def get(url):
       }
       save(data)
 
-    last = body[-1]['id']
+    last = str(body[-1]['id'])
     print last, remaining, wait
 
     if remaining < 5:
